@@ -12,10 +12,6 @@ type Product = {
   details: string;
 }
 
-type Props = {
-  params: { id: string }
-}
-
 // Mock product data
 const products: Product[] = [
   {
@@ -68,21 +64,33 @@ const products: Product[] = [
   }
 ]
 
-export function generateMetadata({ params }: Props): Metadata {
-  return {
-    title: `Product ${params.id}`,
-  }
+type PageProps = {
+  params: {
+    id: string;
+  };
+  searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export function generateStaticParams() {
+async function getProduct(id: string) {
+  const productId = parseInt(id);
+  return products.find(p => p.id === productId);
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const product = await getProduct(params.id);
+  return {
+    title: product ? product.name : 'Product Not Found'
+  };
+}
+
+export async function generateStaticParams() {
   return products.map((product) => ({
     id: product.id.toString(),
-  }))
+  }));
 }
 
-export default function Page({ params }: Props) {
-  const productId = parseInt(params.id);
-  const product = products.find((p) => p.id === productId);
+export default async function Page({ params, searchParams }: PageProps) {
+  const product = await getProduct(params.id);
 
   if (!product) {
     return <div>Product not found</div>;
@@ -93,34 +101,31 @@ export default function Page({ params }: Props) {
       <div className="container mx-auto px-4 py-12 md:py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
           {/* Product Image */}
-          <div className="relative h-[400px] md:h-[600px]">
-            <Image 
-              src={product.image} 
+          <div className="relative aspect-square">
+            <Image
+              src={product.image}
               alt={product.name}
               fill
-              className="object-cover rounded-lg transition-transform duration-500 group-hover:scale-105 group-hover:rotate-1 group-hover:shadow-xl"
-              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover rounded-lg"
             />
           </div>
-
+          
           {/* Product Details */}
           <div>
-            <h1 className="font-montserrat text-2xl md:text-4xl text-[#2A254B] mb-4">
-              {product.name}
-            </h1>
-            <p className="font-montserrat text-base md:text-lg text-gray-700 mb-6">
-              {product.description}
-            </p>
-            <p className="font-montserrat text-base md:text-lg text-gray-700 mb-8">
-              {product.details}
-            </p>
-            <div className="flex items-center mb-8">
-              <span className="font-montserrat text-3xl font-bold text-[#2A254B] mr-6">
-                £{product.price}
-              </span>
-              <button className="px-6 py-3 bg-[#2A254B] text-white font-montserrat uppercase tracking-wider rounded hover:bg-opacity-90 transition-colors">
+            <h1 className="text-4xl font-bold mb-4">{product.name}</h1>
+            <p className="text-xl mb-4">${product.price}</p>
+            <p className="text-gray-600 mb-8">{product.description}</p>
+            <div className="space-y-4">
+              <button className="w-full bg-black text-white py-3 px-6 rounded-lg">
                 Add to Cart
               </button>
+              <Link href="/cart" className="block w-full text-center border border-black py-3 px-6 rounded-lg">
+                View Cart
+              </Link>
+            </div>
+            <div className="mt-12">
+              <h2 className="text-2xl font-bold mb-4">Product Details</h2>
+              <p className="text-gray-600">{product.details}</p>
             </div>
           </div>
         </div>
