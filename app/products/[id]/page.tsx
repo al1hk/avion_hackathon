@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-
+import type { NextPage } from 'next'
 
 // Product type definition
 type Product = {
@@ -64,18 +64,16 @@ const products: Product[] = [
   }
 ]
 
-export default function ProductDetailPage({ params }: { params: { id: string } }) {
-  const productId = parseInt(params.id)
-  const product = products.find(p => p.id === productId)
+const ProductDetailPage: NextPage<{ params: { id: string } }> = async ({ params }) => {
+  const productId = parseInt(params.id);
+  const product = products.find(p => p.id === productId);
 
   if (!product) {
-    return <div>Product not found</div>
+    return <div>Product not found</div>;
   }
 
   return (
     <>
-
-      
       <div className="container mx-auto px-4 py-12 md:py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
           {/* Product Image */}
@@ -170,5 +168,7 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
         </div>
       </footer>
     </>
-  )
-}
+  );
+};
+
+export default ProductDetailPage;
