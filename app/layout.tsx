@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Playfair_Display, Montserrat } from 'next/font/google'
 import "./globals.css";
-import Header from "./components/layout/header";
+import Header from "./cart/components/layout/header";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -37,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${playfair.variable} ${montserrat.variable}`}>
+    <html lang="en" className={`${playfair.variable} ${montserrat.variable} ${geistSans.variable} ${geistMono.variable}`}>
       <body className="bg-white">
         <Header />
         <main className="flex-grow">
