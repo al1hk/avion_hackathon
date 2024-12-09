@@ -1,6 +1,6 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import type { NextPage } from 'next'
+import { Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
 
 // Product type definition
 type Product = {
@@ -12,10 +12,8 @@ type Product = {
   details: string;
 }
 
-interface ProductDetailPageProps {
-  params: {
-    id: string;
-  };
+type Props = {
+  params: { id: string }
 }
 
 // Mock product data
@@ -70,19 +68,19 @@ const products: Product[] = [
   }
 ]
 
-export function generateStaticParams() {
-  const products = [
-    { id: '1' },
-    { id: '2' },
-    { id: '3' },
-    { id: '4' },
-    { id: '5' },
-    { id: '6' },
-  ];
-  return products.map(product => ({ params: { id: product.id } }));
+export function generateMetadata({ params }: Props): Metadata {
+  return {
+    title: `Product ${params.id}`,
+  }
 }
 
-const ProductDetailPage = ({ params }: { params: { id: string } }) => {
+export function generateStaticParams() {
+  return products.map((product) => ({
+    id: product.id.toString(),
+  }))
+}
+
+export default function Page({ params }: Props) {
   const productId = parseInt(params.id);
   const product = products.find((p) => p.id === productId);
 
@@ -187,6 +185,4 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
       </footer>
     </>
   );
-};
-
-export default ProductDetailPage;
+}
