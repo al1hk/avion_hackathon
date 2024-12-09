@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { NextPage } from 'next'
-import { GetServerSideProps } from 'next';
 
 // Product type definition
 type Product = {
@@ -71,18 +70,19 @@ const products: Product[] = [
   }
 ]
 
-export const getServerSideProps: GetServerSideProps<ProductDetailPageProps> = async (context) => {
-  const { id } = context.params as { id: string };
-  return {
-    props: {
-      params: {
-        id,
-      },
-    },
-  };
-};
+export async function generateStaticParams() {
+  const products = [
+    { id: '1' },
+    { id: '2' },
+    { id: '3' },
+    { id: '4' },
+    { id: '5' },
+    { id: '6' },
+  ];
+  return products.map(product => ({ params: { id: product.id } }));
+}
 
-const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ params }) => {
+const ProductDetailPage: React.FC<{ params: { id: string } }> = async ({ params }) => {
   const productId = parseInt(params.id);
   const product = products.find((p) => p.id === productId);
 
