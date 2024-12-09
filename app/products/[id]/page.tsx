@@ -68,16 +68,11 @@ type PageProps = {
   params: {
     id: string;
   };
-  searchParams: { [key: string]: string | string[] | undefined };
-}
-
-async function getProduct(id: string) {
-  const productId = parseInt(id);
-  return products.find(p => p.id === productId);
-}
+};
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const product = await getProduct(params.id);
+  const productId = parseInt(params.id);
+  const product = products.find(p => p.id === productId);
   return {
     title: product ? product.name : 'Product Not Found'
   };
@@ -89,8 +84,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function Page({ params, searchParams }: PageProps) {
-  const product = await getProduct(params.id);
+export default function Page({ params }: PageProps) {
+  const productId = parseInt(params.id);
+  const product = products.find((p) => p.id === productId);
 
   if (!product) {
     return <div>Product not found</div>;
