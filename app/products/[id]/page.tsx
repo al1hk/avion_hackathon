@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { NextPage } from 'next';
 
 // Product type definition
 type Product = {
@@ -64,13 +65,11 @@ const products: Product[] = [
   }
 ]
 
-type PageProps = {
-  params: {
-    id: string;
-  };
+type Props = {
+  params: { id: string }
 };
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const productId = parseInt(params.id);
   const product = products.find(p => p.id === productId);
   return {
@@ -84,7 +83,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function Page({ params }: PageProps) {
+export const Page: NextPage<Props> = async ({ params }) => {
   const productId = parseInt(params.id);
   const product = products.find((p) => p.id === productId);
 
