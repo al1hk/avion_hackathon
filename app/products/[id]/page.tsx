@@ -82,7 +82,7 @@ export async function generateStaticParams() {
   return products.map(product => ({ params: { id: product.id } }));
 }
 
-const ProductDetailPage: React.FC<{ params: { id: string } }> = async ({ params }) => {
+const ProductDetailPage = async ({ params }: { params: { id: string } }) => {
   const productId = parseInt(params.id);
   const product = products.find((p) => p.id === productId);
 
