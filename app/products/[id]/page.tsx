@@ -70,7 +70,7 @@ const products: Product[] = [
   }
 ]
 
-export async function generateStaticParams() {
+export function generateStaticParams() {
   const products = [
     { id: '1' },
     { id: '2' },
@@ -82,7 +82,7 @@ export async function generateStaticParams() {
   return products.map(product => ({ params: { id: product.id } }));
 }
 
-const ProductDetailPage = async ({ params }: { params: { id: string } }) => {
+const ProductDetailPage = ({ params }: { params: { id: string } }) => {
   const productId = parseInt(params.id);
   const product = products.find((p) => p.id === productId);
 
