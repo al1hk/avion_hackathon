@@ -13,19 +13,19 @@ export default function Home() {
           height={1080}
           className="w-full"
         />
-        <div className="absolute top-1/2 right-0 md:right-20 transform -translate-y-1/2 bg-white p-6 md:p-16 shadow-lg w-full md:w-[600px] space-y-6 md:space-y-12">
+        <div className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white p-6 md:p-16 shadow-lg mx-4 md:mx-0 w-[calc(100%-2rem)] md:w-[600px] md:right-20 space-y-6 md:space-y-12">
           <div className="space-y-2">
             <h1 className="font-playfair text-2xl md:text-4xl leading-tight text-black text-center md:text-left">
               Luxury homeware for people who love timeless design quality
             </h1>
           </div>
 
-          <p className="font-montserrat text-base md:text-lg text-black text-center md:text-left">
+          <p className="font-montserrat text-sm md:text-lg text-black text-center md:text-left">
             Shop the new Spring 2022 collection today
           </p>
 
           <div className="flex justify-center md:justify-start">
-            <button className="font-montserrat px-6 md:px-8 py-3 md:py-4 bg-black text-white text-xs md:text-sm tracking-wider uppercase hover:bg-gray-900 transition-colors duration-300">
+            <button className="w-full md:w-auto font-montserrat px-6 md:px-8 py-3 md:py-4 bg-black text-white text-xs md:text-sm tracking-wider uppercase hover:bg-gray-900 transition-colors duration-300">
               New Collection
             </button>
           </div>
@@ -37,7 +37,7 @@ export default function Home() {
           What makes our brand different
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-12 px-4 md:px-0">
           <div className="text-center space-y-4">
             <div className="mb-4 md:mb-6">
               <Image
@@ -355,7 +355,7 @@ export default function Home() {
             {/* Company Info Column */}
             <div className="md:col-span-2">
               <h4 className="font-montserrat text-lg md:text-xl font-light mb-4 md:mb-6">AVION</h4>
-              <p className="font-montserrat text-xs md:text-sm text-gray-300">
+              <p className="font-montserrat text-xs text-gray-300">
                 We are a modern furniture store focused on delivering unique, designer pieces at affordable prices.
               </p>
             </div>
