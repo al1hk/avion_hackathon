@@ -84,7 +84,7 @@ export default function AllProductsPage() {
         {/* Product Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
           {products.map((product) => (
-            <div key={product.id} className="group">
+            <Link href={`/items/${product.name.replace(/\s+/g, '')}`} key={product.id} className="group cursor-pointer">
               <div className="relative h-[300px] md:h-[500px] overflow-hidden">
                 <Image
                   src={product.image}
@@ -102,7 +102,7 @@ export default function AllProductsPage() {
                   £{product.price}
                 </p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
