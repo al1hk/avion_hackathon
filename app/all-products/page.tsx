@@ -51,7 +51,11 @@ export default function AllProductsPage() {
         {/* Product Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
           {products.map((product) => (
+<<<<<<< HEAD
             <Link href={`/product/${product.slug.current}`} key={product._id} className="group cursor-pointer">
+=======
+            <Link href={`/items/${product.name.replace(/\s+/g, '')}`} key={product.id} className="group cursor-pointer">
+>>>>>>> 848b3f81c51772111978b450a37cafa92527f503
               <div className="relative h-[300px] md:h-[500px] overflow-hidden">
                 <Image
                   src={product.imageUrl}

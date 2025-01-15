@@ -48,6 +48,7 @@ export default function Header() {
           ${isMenuOpen ? 'block' : 'hidden'}
           absolute lg:relative left-0 right-0 bg-white z-50 border-b lg:border-b-0
         `}>
+<<<<<<< HEAD
           <Link href="/" className="block lg:inline-block py-3 px-4 lg:p-0 text-xl text-black font-serif hover:text-gray-800 font-montserrat tracking-wide hover:bg-gray-50 lg:hover:bg-transparent">
             Home
           </Link>
@@ -56,6 +57,28 @@ export default function Header() {
           </Link>
           <Link href="/all-products/" className="block lg:inline-block py-3 px-4 lg:p-0 text-xl font-serif text-black hover:text-gray-800 font-montserrat tracking-wide hover:bg-gray-50 lg:hover:bg-transparent">
             All Products
+=======
+          <Link href="/plant-pots" className="block lg:inline-block py-3 px-4 lg:p-0 text-sm text-black hover:text-gray-800 font-montserrat tracking-wide hover:bg-gray-50 lg:hover:bg-transparent">
+            Plant pots
+          </Link>
+          <Link href="/ceramics" className="block lg:inline-block py-3 px-4 lg:p-0 text-sm text-black hover:text-gray-800 font-montserrat tracking-wide hover:bg-gray-50 lg:hover:bg-transparent">
+            Ceramics
+          </Link>
+          <Link href="/tables" className="block lg:inline-block py-3 px-4 lg:p-0 text-sm text-black hover:text-gray-800 font-montserrat tracking-wide hover:bg-gray-50 lg:hover:bg-transparent">
+            Tables
+          </Link>
+          <Link href="/chairs" className="block lg:inline-block py-3 px-4 lg:p-0 text-sm text-black hover:text-gray-800 font-montserrat tracking-wide hover:bg-gray-50 lg:hover:bg-transparent">
+            Chairs
+          </Link>
+          <Link href="/crockery" className="block lg:inline-block py-3 px-4 lg:p-0 text-sm text-black hover:text-gray-800 font-montserrat tracking-wide hover:bg-gray-50 lg:hover:bg-transparent">
+            Crockery
+          </Link>
+          <Link href="/tableware" className="block lg:inline-block py-3 px-4 lg:p-0 text-sm text-black hover:text-gray-800 font-montserrat tracking-wide hover:bg-gray-50 lg:hover:bg-transparent">
+            Tableware
+          </Link>
+          <Link href="/cutlery" className="block lg:inline-block py-3 px-4 lg:p-0 text-sm text-black hover:text-gray-800 font-montserrat tracking-wide hover:bg-gray-50 lg:hover:bg-transparent">
+            Cutlery
+>>>>>>> 848b3f81c51772111978b450a37cafa92527f503
           </Link>
           
         </nav>
