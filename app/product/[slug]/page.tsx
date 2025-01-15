@@ -21,7 +21,7 @@ interface Product {
   tags: string[];
 }
 
-async function getProduct(slug: string) {
+async function getProduct(slug: string): Promise<Product | null> {
   try {
     const product = await client.fetch(
       groq`*[_type == "product" && slug.current == $slug][0]{
@@ -49,7 +49,9 @@ async function getProduct(slug: string) {
   }
 }
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<
+  { params: { slug: string } }[]
+> {
   const products = await client.fetch(
     groq`*[_type == "product"]{
       "slug": slug.current
@@ -57,14 +59,14 @@ export async function generateStaticParams() {
   );
 
   return products.map((product: { slug: string }) => ({
-    slug: product.slug,
+    params: { slug: product.slug },
   }));
 }
 
-export async function generateMetadata({ 
+export async function generateMetadata({
   params,
 }: {
-  params: { slug: string }
+  params: { slug: string };
 }): Promise<Metadata> {
   const product = await getProduct(params.slug);
 
@@ -80,10 +82,10 @@ export async function generateMetadata({
   };
 }
 
-export default async function ProductPage({ 
+export default async function ProductPage({
   params,
 }: {
-  params: { slug: string }
+  params: { slug: string };
 }) {
   const product = await getProduct(params.slug);
 
