@@ -15,7 +15,7 @@ export default function AboutPage() {
           <div className="flex space-x-4">
             <Link 
               href="/all-products" 
-              className="bg-[#2A254B] text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition-colors font-montserrat uppercase tracking-wider text-sm"
+              className="bg-[#4d40a0] text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition-colors font-montserrat uppercase tracking-wider text-sm"
             >
               Shop All Products
             </Link>
@@ -45,7 +45,7 @@ export default function AboutPage() {
             <div className="flex space-x-4">
               <Link 
                 href="/all-products" 
-                className="bg-[#2A254B] text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition-colors font-montserrat uppercase tracking-wider text-sm"
+                className="bg-[#5a3ddb] text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition-colors font-montserrat uppercase tracking-wider text-sm"
               >
                 View Collection
               </Link>
