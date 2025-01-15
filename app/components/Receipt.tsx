@@ -23,59 +23,91 @@ const Receipt = ({ customerDetails, items, total, orderDate }: ReceiptProps) => 
 
   const downloadReceipt = async () => {
     if (receiptRef.current) {
-      const canvas = await html2canvas(receiptRef.current);
+      const canvas = await html2canvas(receiptRef.current, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        windowWidth: receiptRef.current.scrollWidth,
+        windowHeight: receiptRef.current.scrollHeight,
+      });
+      
       const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4',
+      });
+
       const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+      const imgX = (pdfWidth - imgWidth * ratio) / 2;
+      const imgY = 0;
+
+      pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
       pdf.save(`receipt-${orderDate}.pdf`);
     }
   };
 
   return (
-    <div className="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md">
-      <div ref={receiptRef} className="space-y-6">
-        <div className="text-center border-b pb-4">
-          <h2 className="text-3xl font-bold">Order Receipt</h2>
-          <p className="text-gray-600">Order Date: {orderDate}</p>
+    <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md my-8">
+      <div ref={receiptRef} className="space-y-8 p-8 bg-white">
+        <div className="text-center border-b pb-6">
+          <h2 className="text-4xl font-playfair mb-4">AVION</h2>
+          <h3 className="text-3xl font-playfair mb-3">Order Receipt</h3>
+          <p className="text-gray-600 font-montserrat">Order Date: {orderDate}</p>
         </div>
 
-        <div className="border-b pb-4">
-          <h3 className="text-xl font-semibold mb-2">Customer Details</h3>
-          <p><strong>Name:</strong> {customerDetails.name}</p>
-          <p><strong>Email:</strong> {customerDetails.email}</p>
-          <p><strong>Address:</strong> {customerDetails.address}</p>
-          <p><strong>City:</strong> {customerDetails.city}</p>
-          <p><strong>State:</strong> {customerDetails.state}</p>
-          <p><strong>Postal Code:</strong> {customerDetails.postalCode}</p>
-          <p><strong>Phone:</strong> {customerDetails.phone}</p>
+        <div className="border-b pb-6">
+          <h3 className="text-3xl font-playfair mb-4">Customer Details</h3>
+          <div className="space-y-3">
+            <p className='font-montserrat text-lg'><span className="font-semibold">Name:</span> {customerDetails.name}</p>
+            <p className='font-montserrat text-lg'><span className="font-semibold">Email:</span> {customerDetails.email}</p>
+            <p className='font-montserrat text-lg'><span className="font-semibold">Address:</span> {customerDetails.address}</p>
+            <p className='font-montserrat text-lg'><span className="font-semibold">City:</span> {customerDetails.city}</p>
+            <p className='font-montserrat text-lg'><span className="font-semibold">State:</span> {customerDetails.state}</p>
+            <p className='font-montserrat text-lg'><span className="font-semibold">Postal Code:</span> {customerDetails.postalCode}</p>
+            <p className='font-montserrat text-lg'><span className="font-semibold">Phone:</span> {customerDetails.phone}</p>
+          </div>
         </div>
 
-        <div className="border-b pb-4">
-          <h3 className="text-xl font-semibold mb-2">Order Items</h3>
-          <div className="space-y-2">
+        <div className="border-b pb-6">
+          <h3 className="text-3xl font-playfair mb-4">Order Items</h3>
+          <div className="space-y-4">
             {items.map((item, index) => (
-              <div key={index} className="flex justify-between">
-                <div>
-                  <p className="font-medium">{item.name}</p>
-                  <p className="text-gray-600">Quantity: {item.quantity}</p>
+              <div key={index} className="flex justify-between items-center border-b pb-3">
+                <div className="flex-grow">
+                  <p className="font-montserrat text-lg font-medium">{item.name}</p>
+                  <p className="text-gray-600 font-montserrat">Quantity: {item.quantity}</p>
                 </div>
-                <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                <div className="text-right min-w-[120px]">
+                  <p className="font-montserrat text-lg">£{(item.price * item.quantity).toFixed(2)}</p>
+                  <p className="text-gray-600 font-montserrat">£{item.price} each</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="text-right">
-          <p className="text-xl font-bold">Total: ${total.toFixed(2)}</p>
+        <div className="pt-4 pb-8">
+          <div className="flex justify-between items-center border-t border-b py-4 mt-4">
+            <span className="text-2xl font-playfair">Total Amount</span>
+            <span className="text-2xl font-playfair font-bold min-w-[120px] text-right">£{total.toFixed(2)}</span>
+          </div>
+        </div>
+
+        <div className="text-center text-sm text-gray-500 mt-8 pt-4">
+          <p>Thank you for shopping with AVION!</p>
+          <p>For any questions, please contact our customer service.</p>
         </div>
       </div>
 
-      <div className="mt-6 text-center">
+      <div className="mt-8 text-center">
         <button
           onClick={downloadReceipt}
-          className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors"
+          className="bg-[#2A254B] text-white px-8 py-3 rounded-md hover:bg-opacity-90 transition-colors font-montserrat text-lg"
         >
           Download Receipt
         </button>

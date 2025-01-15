@@ -3,10 +3,7 @@ import localFont from "next/font/local";
 import { Playfair_Display, Montserrat } from 'next/font/google'
 import "./globals.css";
 import Header from "./cart/components/layout/header";
-<<<<<<< HEAD
 import { CartProvider } from './context/CartContext'
-=======
->>>>>>> 848b3f81c51772111978b450a37cafa92527f503
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -43,19 +40,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${montserrat.variable} ${geistSans.variable} ${geistMono.variable}`}>
       <body className="bg-white">
-<<<<<<< HEAD
         <CartProvider>
           <Header />
           <main className="flex-grow">
             {children}
           </main>
         </CartProvider>
-=======
-        <Header />
-        <main className="flex-grow">
-          {children}
-        </main>
->>>>>>> 848b3f81c51772111978b450a37cafa92527f503
       </body>
     </html>
   );
