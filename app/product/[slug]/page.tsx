@@ -4,7 +4,6 @@ import { groq } from 'next-sanity';
 import client from '@/sanity/lib/client';
 import ProductDetails from '@/app/ProductDetails';
 
-
 interface Product {
   _id: number;
   _type: string;
@@ -22,12 +21,12 @@ interface Product {
   tags: string[];
 }
 
-type Props = {
+interface PageProps {
   params: {
     slug: string;
   };
   searchParams: { [key: string]: string | string[] | undefined };
-};
+}
 
 async function getProduct(slug: string) {
   try {
@@ -63,13 +62,13 @@ export async function generateStaticParams() {
       "slug": slug.current
     }`
   );
-  
+
   return products.map((product: { slug: string }) => ({
     slug: product.slug,
   }));
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const product = await getProduct(params.slug);
 
   if (!product) {
@@ -84,7 +83,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function ProductPage({ params, searchParams }: Props) {
+export default async function ProductPage({ params, searchParams }: PageProps) {
   const product = await getProduct(params.slug);
 
   if (!product) {
