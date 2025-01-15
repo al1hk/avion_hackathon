@@ -21,13 +21,6 @@ interface Product {
   tags: string[];
 }
 
-interface PageProps {
-  params: {
-    slug: string;
-  };
-  searchParams: { [key: string]: string | string[] | undefined };
-}
-
 async function getProduct(slug: string) {
   try {
     const product = await client.fetch(
@@ -68,7 +61,11 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ 
+  params,
+}: {
+  params: { slug: string }
+}): Promise<Metadata> {
   const product = await getProduct(params.slug);
 
   if (!product) {
@@ -83,7 +80,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function ProductPage({ params, searchParams }: PageProps) {
+export default async function ProductPage({ 
+  params,
+}: {
+  params: { slug: string }
+}) {
   const product = await getProduct(params.slug);
 
   if (!product) {
